@@ -3,16 +3,10 @@ import random
 import time
 import argparse
 import os
-APP_ABS_PATH = "/Users/sakuraihikari/quick_translation_learning/app"
-INPUT_DIR_PATH = os.path.join(APP_ABS_PATH, "input")
-DEFAULT_DATA_CSV_PATH =  os.path.join(INPUT_DIR_PATH, "quick_translation_data.csv")
-DEFAULT_TIME_LIMIT = 5
-MAX_QUESTIONS  = 50
 
-def load_csv_file(file_path: str):
-    with open(file_path, newline="", encoding="utf-8") as f:
-        data = csv.reader(f)
-        return list(data)
+from default_definitions import DEFAULT_DATA_CSV_PATH, DEFAULT_TIME_LIMIT, MAX_QUESTIONS
+from utilities.control_csv import load_csv_file
+
 
 def clear_screen():
     os.system("cls" if os.name == "nt" else "clear")
@@ -48,7 +42,7 @@ def run_quick_translation_learning(data: list, time_limit: float=DEFAULT_TIME_LI
     print(f"\n⏱ Slow questions: {len(slow_questions)}")
     return slow_questions
 
-def quick_translation_learning(file_path: str, time_limit: float = 1.5):
+def quick_translation_learning(file_path: str, time_limit: float = 1.5, max_questions: int = 50):
     rows = load_csv_file(file_path)
 
     if len(rows) < 2:
@@ -62,7 +56,7 @@ def quick_translation_learning(file_path: str, time_limit: float = 1.5):
     while question_list:
         if loop_count > 1:
             print("\n🔁 Let's try the slow questions again!")
-        question_list = run_quick_translation_learning(question_list, time_limit)
+        question_list = run_quick_translation_learning(question_list, time_limit, max_questions)
         loop_count += 1
 
     print("\n✅ 全ての問題をクリア！お疲れ様でした！")
@@ -95,7 +89,7 @@ def main():
 
     quick_translation_learning(
         file_path=args.input_file_path,
-        time_limit=args.time_limit
+        time_limit=args.time_limit,
         max_questions=args.max_questions
     )
 
