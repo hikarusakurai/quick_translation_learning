@@ -1,4 +1,3 @@
-import csv
 import os
 import argparse
 
@@ -11,22 +10,20 @@ def add_sentence(csv_path: str):
       jp = input("日本語: ").strip()
       en = input("English: ").strip()
 
-      if jp.lower() == "q" or en.lower() == "q":
-          break
-
       if not jp or not en:
           print("❌ 日本語と英語は必須です")
           continue
 
       jp_en_list.append((jp, en))
+      next_command=input("✅ 追加しました。続けて入力するか、'q'を入力して終了してください。")
+      if next_command.lower() == "q":
+        break
 
     if not os.path.exists(csv_path):
       print("❌ CSV file not found.")
       return
       
     append_to_csv(csv_path, jp_en_list)
-    
-    print("✅ 追加しました")
 
 def main():
     parser = argparse.ArgumentParser(

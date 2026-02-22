@@ -34,7 +34,10 @@ def run_quick_translation_learning(data: list, time_limit: float=DEFAULT_TIME_LI
             print("⚠️ 時間オーバー！")
             slow_questions.append((jp, en))
 
-        input("▶ Next! Press Enter: ")
+        next_command = input("▶ Next! Press Enter or type 'q' to quit: ")
+        if next_command.lower() == "q":
+            print("👋 お疲れ様でした！")
+            exit(0) 
         clear_screen()
         if num_q >= max_questions:
             break
